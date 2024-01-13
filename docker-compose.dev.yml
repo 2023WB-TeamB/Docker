@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+    tty: true
+    stdin_open: true
+    networks:
+      - gtd
+
+  backend:
+    container_name: backend
+    env_file:
+      - ./backend/.env
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app/backend
+      - ./backend/static:/app/static
+      - ./backend/media:/app/media
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+    tty: true
+    networks:
+      - gtd
+
+  rabbitmq:
+    hostname: gtdhost
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    command: rabbitmq-server
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env # Note: Referencing backend environment file
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./backend:/app/backend
+    depends_on:
+      - backend
+    networks:
+      - gtd
+
+  celery_worker:
+    container_name: celery_worker
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: "celery -A gtd.celery worker --loglevel=info --pool=gevent --concurrency=12"
+    depends_on:
+      - rabbitmq
+      - backend
+    volumes:
+      - ./backend:/app/backend
+    networks:
+      - gtd
+
+networks:
+  gtd:
+    driver: bridge
