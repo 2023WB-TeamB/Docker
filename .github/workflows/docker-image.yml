@@ -25,6 +25,7 @@ jobs:
         
     - name: create certificate file
       run: |
+        mkdir /etc/crypt/
         touch /etc/crypt/certificate.pem
         echo "${{ secrets.SSL_PEM_KEY }}" >> /etc/crypt/certificate.pem
 
