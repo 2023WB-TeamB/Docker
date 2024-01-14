@@ -25,6 +25,7 @@ jobs:
         
     - name: create certificate file
       run: |
+        mkdir /keys
         touch /keys/certificate.pem
         echo "${{ secrets.SSL_PEM_KEY }}" >> /keys/certificate.pem
 
