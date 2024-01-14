@@ -71,9 +71,6 @@ services:
   nginx:
     container_name: nginx
     restart: unless-stopped
-    volumes:
-      - /etc/nginx/certificate.pem:/etc/nginx/certificate.pem
-      - /etc/nginx/private.key:/etc/nginx/private.key
     build:
       context: ./nginx
     ports:
@@ -85,6 +82,8 @@ services:
     volumes:
       - ./frontend/build:/var/www/frontend
       - ./backend/static:/backend/static
+      - /etc/nginx/certificate.pem:/etc/nginx/certificate.pem
+      - /etc/nginx/private.key:/etc/nginx/private.key
     depends_on:
       - backend
       - frontend
