@@ -27,12 +27,12 @@ jobs:
       run: |
         mkdir ./key
         touch ./key/certificate.pem
-        echo "${{ secrets.SSL_PEM_KEY }}" >> /etc/crypt/certificate.pem
+        echo "${{ secrets.SSL_PEM_KEY }}" >> ./key/certificate.pem
 
     - name: create private file
       run: |
         touch ./key/private.key
-        echo "${{ secrets.SSL_PRIVATE_KEY }}" >> /etc/crypt/private.key
+        echo "${{ secrets.SSL_PRIVATE_KEY }}" >> ./key/private.key
 
     - name: Docker-Compose Down
       run: |
