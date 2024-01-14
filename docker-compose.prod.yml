@@ -71,9 +71,9 @@ services:
   nginx:
     container_name: nginx
     restart: unless-stopped
-    env_file:
-      - /etc/nginx/certificate.pem
-      - /etc/nginx/private.key
+    volumes:
+      - /etc/nginx/certificate.pem:/etc/nginx/certificate.pem
+      - /etc/nginx/private.key:/etc/nginx/private.key
     build:
       context: ./nginx
     ports:
