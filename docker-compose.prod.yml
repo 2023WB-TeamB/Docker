@@ -71,19 +71,14 @@ services:
   nginx:
     container_name: nginx
     volumes:
-      - /etc/nginx/certificate.pem:/etc/nginx/private.key
-    env_file:
-      - /etc/nginx/certificate.pem
-      - /etc/nginx/private.key
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./frontend/build:/var/www/frontend
       - ./backend/static:/backend/static
+      - ./etc/nginx/certificate.pem:/etc/nginx/certificate.pem
+      - ./etc/nginx/private.key:/etc/nginx/private.key
     depends_on:
       - backend
       - frontend
