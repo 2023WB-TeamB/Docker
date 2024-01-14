@@ -71,6 +71,8 @@ services:
   nginx:
     container_name: nginx
     restart: unless-stopped
+    env_file:
+      - /etc/nginx
     build:
       context: ./nginx
     ports:
@@ -82,7 +84,6 @@ services:
     volumes:
       - ./frontend/build:/var/www/frontend
       - ./backend/static:/backend/static
-      - /etc/nginx:/etc/nginx
     depends_on:
       - backend
       - frontend
