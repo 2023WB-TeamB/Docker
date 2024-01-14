@@ -77,8 +77,7 @@ services:
     volumes:
       - ./frontend/build:/var/www/frontend
       - ./backend/static:/backend/static
-      - ./etc/nginx/certificate.pem:/etc/nginx/certificate.pem
-      - ./etc/nginx/private.key:/etc/nginx/private.key
+      - /etc/nginx:/etc/nginx
     depends_on:
       - backend
       - frontend
