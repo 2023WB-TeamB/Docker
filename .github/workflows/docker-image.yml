@@ -25,12 +25,12 @@ jobs:
         
     - name: create certificate file
       run: |
-        touch /keys/certificate.pem
+        sudo touch /keys/certificate.pem
         echo "${{ secrets.SSL_PEM_KEY }}" >> /keys/certificate.pem
 
     - name: create private file
       run: |
-        touch /keys/private.key
+        sudo touch /keys/private.key
         echo "${{ secrets.SSL_PRIVATE_KEY }}" >> /keys/private.key
 
     - name: Docker-Compose Down
