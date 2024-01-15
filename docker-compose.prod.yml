@@ -45,6 +45,8 @@ services:
     restart: unless-stopped
     env_file:
       - ./backend/.env
+    environment:
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit handshake_timeout 120000
     ports:
       - "5672:5672"
       - "15672:15672"
