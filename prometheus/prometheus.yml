@@ -7,9 +7,9 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets:
-          - gtd.kro.kr
+        - host.docker.internal:8000
 
-  - job_name: "prometheus"
+  - job_name: 'prometheus'
     static_configs:
       - targets:
-          - gtd.kro.kr:9090
+        - host.docker.internal:9090

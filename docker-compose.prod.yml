@@ -36,6 +36,8 @@ services:
     tty: true
     networks:
       - gtd
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   rabbitmq:
     hostname: gtdhost
@@ -110,6 +112,8 @@ services:
     container_name: prometheus
     networks:
       - gtd
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   grafana:
     image: grafana/grafana
