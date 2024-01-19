@@ -27,7 +27,7 @@ services:
     volumes:
       - ./backend:/backend
       - ./backend/static:/backend/static
-    command: sh -c "gunicorn gtd.wsgi --bind 0.0.0.0:8000 --timeout 240"
+    command: sh -c "gunicorn gtd.wsgi:application --preload --bind 0.0.0.0:8000 --timeout 240 -k gevent"
     restart: on-failure
     ports:
       - "8000:8000"
