@@ -86,9 +86,9 @@ services:
     volumes:
       - ./frontend/build:/var/www/frontend
       - ./backend/static:/backend/static
-      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /etc/nginx/certificate.pem:/etc/nginx/certificate.pem
-      - /etc/nginx/private.key:/etc/nginx/private.key
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/certificate.pem:/etc/nginx/certificate.pem
+      - ./nginx/private.key:/etc/nginx/private.key
     depends_on:
       - backend
       - frontend
@@ -124,10 +124,10 @@ services:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
     command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - "--path.procfs=/host/proc"
+      - "--path.rootfs=/rootfs"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
     ports:
       - 9100:9100
     expose:
