@@ -22,11 +22,19 @@ jobs:
       run: |
         touch ./backend/.env
         echo "${{ secrets.ENV_VARS }}" >> ./backend/.env
-        
+
+    - name: rm certificate file
+      run: |
+        rm -f /etc/nginx/certificate.pem
+
     - name: create certificate file
       run: |
         touch /etc/nginx/certificate.pem
         echo "${{ secrets.SSL_PEM_KEY }}" >> /etc/nginx/certificate.pem
+
+    - name: rm private file
+      run: |
+        rm -f /etc/nginx/private.key
 
     - name: create private file
       run: |
