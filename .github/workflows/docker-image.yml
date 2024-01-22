@@ -53,4 +53,4 @@ jobs:
 
     - name: Docker-Compose Up
       run: |
-        docker-compose -f docker-compose.prod.yml up -d --remove-orphans
+        docker-compose --timeout 120 -f docker-compose.prod.yml up -d --remove-orphans
